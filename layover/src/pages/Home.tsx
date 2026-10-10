@@ -5,6 +5,7 @@ import TransitGuide from '../components/TransitGuide'
 import ItineraryBuilder from '../components/ItineraryBuilder'
 import HowWeMakeMoney from '../components/HowWeMakeMoney'
 import BookingModal from '../components/BookingModal'
+import InsiderTips from '../components/InsiderTips'
 
 export default function Home() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -30,7 +31,7 @@ export default function Home() {
             <div className="hidden md:flex items-center space-x-8">
               <a href="#itinerary" className="text-slate-300 hover:text-amber-400 transition-colors">Itinerary</a>
               <a href="#transit-guide" className="text-slate-300 hover:text-amber-400 transition-colors">Transit Guide</a>
-              <a href="#about" className="text-slate-300 hover:text-amber-400 transition-colors">About Us</a>
+              <a href="#tips" className="text-slate-300 hover:text-amber-400 transition-colors">Travel Tips</a>
               <button 
                 onClick={() => setIsBookingOpen(true)}
                 className="bg-blue-600 hover:bg-blue-500 text-white px-6 py-2 rounded-full font-medium transition-all duration-300 hover:shadow-lg hover:shadow-blue-500/30 transform hover:-translate-y-0.5"
@@ -102,6 +103,7 @@ export default function Home() {
 
       <ItineraryBuilder />
       <TransitGuide />
+      <InsiderTips />
       <HowWeMakeMoney />
 
       {/* Features Section */}
