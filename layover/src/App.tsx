@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Plane, Compass, Calendar, Search, MapPin, Star, ArrowRight, Menu } from 'lucide-react'
+import { Plane, Compass, Calendar, Search, MapPin, Star, Menu } from 'lucide-react'
 
 function App() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
