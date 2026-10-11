@@ -1,5 +1,4 @@
-import React from 'react';
-import { Plane, Clock, ShieldCheck, AlertCircle, ArrowRight } from 'lucide-react';
+import { Plane, ShieldCheck } from 'lucide-react';
 import { useLayover } from '../context/LayoverContext';
 
 export default function FlightInformation() {
@@ -17,7 +16,15 @@ export default function FlightInformation() {
           </div>
           <div>
             <h3 className="text-lg font-bold font-display text-[#F5F7FC]">Flight & Timing Schedule</h3>
-            <span className="text-xs font-mono text-[#9EACC3]">Dubai International Airport ({flight.terminal})</span>
+            <div className="flex flex-wrap items-center gap-2 mt-1 text-xs font-mono">
+              <span className="text-[#12C8E8] font-semibold">{flight.originAirport || 'Calicut (CCJ)'}</span>
+              <span className="text-slate-500">➔</span>
+              <span className="text-[#FFAD18] font-bold bg-[#FFAD18]/10 px-2 py-0.5 rounded border border-[#FFAD18]/30">
+                Transit: {flight.terminal}
+              </span>
+              <span className="text-slate-500">➔</span>
+              <span className="text-[#26D6A0] font-semibold">{flight.destinationAirport || 'Dubai (DXB)'}</span>
+            </div>
           </div>
         </div>
 

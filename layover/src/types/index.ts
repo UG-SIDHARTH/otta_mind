@@ -1,9 +1,13 @@
-export type DXBTerminal = 'T1' | 'T2' | 'T3';
+export type DXBTerminal = 'T1' | 'T2' | 'T3' | 'DOH' | 'CCJ' | 'TRV' | string;
 
 export interface FlightContext {
   inboundFlight: string;
   outboundFlight: string;
   terminal: DXBTerminal;
+  originAirport?: string;
+  destinationAirport?: string;
+  transitHubName?: string;
+  travelDate?: string;
   arrivalTime: string; // HH:mm format
   departureTime: string; // HH:mm format
   layoverDurationMinutes: number;
@@ -49,7 +53,7 @@ export interface ItineraryStop {
   scheduledArrival: string;
   scheduledDeparture: string;
   legToNext?: {
-    mode: 'metro' | 'taxi' | 'walk';
+    mode: 'metro' | 'taxi' | 'walk' | 'careem' | 'private';
     durationMins: number;
     costAed: number;
   };

@@ -1,9 +1,7 @@
-import React, { useState } from 'react';
-import { Navigation, Train, Car, CheckCircle2, AlertTriangle, ShieldCheck, MapPin, Clock, ArrowRight } from 'lucide-react';
+import { useState } from 'react';
+import { Navigation, Train, Clock } from 'lucide-react';
 import MapComponent from './MapComponent';
-import placesData from '../data/places.json';
 import stationsData from '../data/stations.json';
-import type { Point } from '../lib/routing';
 
 export default function RouteIntelligence() {
   const [selectedRouteId, setSelectedRouteId] = useState('r1');

@@ -26,6 +26,10 @@ const defaultFlight: FlightContext = {
   inboundFlight: 'EK 202',
   outboundFlight: 'EK 508',
   terminal: 'T3',
+  originAirport: 'LHR (London Heathrow)',
+  destinationAirport: 'SIN (Singapore Changi)',
+  transitHubName: 'Dubai International (DXB Terminal 3)',
+  travelDate: '2026-10-15',
   arrivalTime: '08:00',
   departureTime: '16:00', // 8h layover
   layoverDurationMinutes: 480, // 8 hours

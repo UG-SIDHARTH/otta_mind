@@ -1,4 +1,3 @@
-import React from 'react';
 import { ShieldCheck, Headset, Sparkles, Clock, CheckCircle2 } from 'lucide-react';
 
 export default function GuaranteeSection() {

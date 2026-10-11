@@ -1,4 +1,3 @@
-import React from 'react';
 import { Star, Clock, MapPin, ArrowRight } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import type { ExperienceProps } from '../types';

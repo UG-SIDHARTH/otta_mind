@@ -1,4 +1,3 @@
-import React from 'react';
 import { ArrowRight, Sparkles } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import ExperienceCard from './ExperienceCard';
@@ -19,6 +18,48 @@ export default function ExperiencesSection() {
       reviewsCount: 1240,
       image: 'https://images.unsplash.com/photo-1512453979798-5ea266f8880c?auto=format&fit=crop&q=80&w=800',
       metroStation: 'Direct DXB Metro Red Line Connection',
+    },
+    {
+      id: 'exp-qatar',
+      name: 'Souq Waqif & Doha Corniche Heritage Walk',
+      city: 'Qatar (Doha)',
+      airportCode: 'DOH',
+      description: 'Wander authentic spice souqs, the Falcon market, and scenic seaside Corniche with views of Doha\'s illuminated skyline.',
+      duration: '3.0 Hours',
+      proximity: '15m from DOH',
+      priceAed: 150,
+      rating: 4.92,
+      reviewsCount: 940,
+      image: 'https://images.unsplash.com/photo-1568322445389-f64ac2515020?auto=format&fit=crop&q=80&w=800',
+      metroStation: 'Doha Metro Gold Line (Souq Waqif Station)',
+    },
+    {
+      id: 'exp-calicut',
+      name: 'Calicut Beach, SM Street & Halwa Food Trail',
+      city: 'Calicut (Kozhikode)',
+      airportCode: 'CCJ',
+      description: 'Savor legendary Kozhikodan Biryani, explore the century-old Mittai Theruvu (SM Street), and watch sunset over Calicut Beach Pier.',
+      duration: '3.5 Hours',
+      proximity: '28m from CCJ',
+      priceAed: 85,
+      rating: 4.96,
+      reviewsCount: 1120,
+      image: 'https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?auto=format&fit=crop&q=80&w=800',
+      metroStation: 'Direct KSRTC Fast Passenger & Airport AC Shuttle',
+    },
+    {
+      id: 'exp-trivandrum',
+      name: 'Padmanabhaswamy Temple & Kovalam Beach Express',
+      city: 'Trivandrum',
+      airportCode: 'TRV',
+      description: 'Marvel at the ancient Dravidian architecture of Padmanabhaswamy Temple and unwind along the golden sands of Kovalam Lighthouse Beach.',
+      duration: '3.0 Hours',
+      proximity: '20m from TRV',
+      priceAed: 95,
+      rating: 4.89,
+      reviewsCount: 880,
+      image: 'https://images.unsplash.com/photo-1590050752117-238cb0fb12b1?auto=format&fit=crop&q=80&w=800',
+      metroStation: 'Pre-paid TRV Taxi & Rapid Highway Link',
     },
     {
       id: 'exp-singapore',

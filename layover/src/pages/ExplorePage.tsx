@@ -1,17 +1,14 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import {
   Train,
   ShieldCheck,
   CreditCard,
   Luggage,
   Zap,
-  Sun,
   Sparkles,
   Search,
   ChevronRight,
   Heart,
-  MapPin,
-  Clock,
   ArrowRight,
   Bookmark,
   PhoneCall,
@@ -22,7 +19,7 @@ import {
   CheckCircle2,
   X
 } from 'lucide-react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import placesData from '../data/places.json';
 import Footer from '../components/Footer';
 
@@ -75,6 +72,18 @@ export default function ExplorePage() {
     p23: 'https://images.unsplash.com/photo-1513836279014-a89f7a76ae86?auto=format&fit=crop&q=80&w=800',
     p24: 'https://images.unsplash.com/photo-1534567153574-2b12153a87f0?auto=format&fit=crop&q=80&w=800',
     p25: 'https://images.unsplash.com/photo-1580674684081-7617fbf3d745?auto=format&fit=crop&q=80&w=800',
+    // Calicut (CCJ) Destinations
+    p27: 'https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?auto=format&fit=crop&q=80&w=800', // Calicut Beach
+    p28: 'https://images.unsplash.com/photo-1596178065887-1198b6148b2b?auto=format&fit=crop&q=80&w=800', // SM Street Bazaar
+    p29: 'https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&q=80&w=800', // Beypore Port
+    // Trivandrum (TRV) Destinations
+    p31: 'https://images.unsplash.com/photo-1590050752117-238cb0fb12b1?auto=format&fit=crop&q=80&w=800', // Padmanabhaswamy Temple
+    p32: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&q=80&w=800', // Kovalam Beach
+    p33: 'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&q=80&w=800', // Napier Museum
+    // Qatar / Doha (DOH) Destinations
+    p35: 'https://images.unsplash.com/photo-1568322445389-f64ac2515020?auto=format&fit=crop&q=80&w=800', // Souq Waqif
+    p36: 'https://images.unsplash.com/photo-1512453979798-5ea266f8880c?auto=format&fit=crop&q=80&w=800', // Museum of Islamic Art
+    p37: 'https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&q=80&w=800', // Doha Corniche
   };
 
   const curatedSights: AttractionDetail[] = placesData

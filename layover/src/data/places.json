@@ -248,5 +248,125 @@
     "description": "Highest observation wheel in the world.",
     "bestTime": "Sunset",
     "isAirport": false
+  },
+  {
+    "id": "p26",
+    "name": "Calicut International Airport (CCJ)",
+    "lat": 11.1364,
+    "lng": 75.9553,
+    "category": "Airport",
+    "description": "Primary international gateway of Malabar region.",
+    "bestTime": "Anytime",
+    "isAirport": true
+  },
+  {
+    "id": "p27",
+    "name": "Calicut Beach & Pier Promenade",
+    "lat": 11.2618,
+    "lng": 75.7694,
+    "category": "Beach",
+    "description": "Iconic Arabian sea coastline with century-old colonial pier.",
+    "bestTime": "Sunset",
+    "isAirport": false
+  },
+  {
+    "id": "p28",
+    "name": "SM Street (Sweet Meat Street / Mittai Theruvu)",
+    "lat": 11.2505,
+    "lng": 75.7804,
+    "category": "Shopping",
+    "description": "Heritage bazaar famed for Kozhikodan Halwa & banana chips.",
+    "bestTime": "Evening",
+    "isAirport": false
+  },
+  {
+    "id": "p29",
+    "name": "Beypore Port & Ancient Uru Shipyard",
+    "lat": 11.1772,
+    "lng": 75.8081,
+    "category": "Culture",
+    "description": "Centuries-old port where traditional wooden dhows are handcrafted.",
+    "bestTime": "Morning",
+    "isAirport": false
+  },
+  {
+    "id": "p30",
+    "name": "Trivandrum International Airport (TRV)",
+    "lat": 8.4821,
+    "lng": 76.9200,
+    "category": "Airport",
+    "description": "Kerala's first international gateway located along the coast.",
+    "bestTime": "Anytime",
+    "isAirport": true
+  },
+  {
+    "id": "p31",
+    "name": "Sree Padmanabhaswamy Temple",
+    "lat": 8.4830,
+    "lng": 76.9436,
+    "category": "Culture",
+    "description": "Ancient Dravidian temple architectural marvel and sacred heritage site.",
+    "bestTime": "Morning",
+    "isAirport": false
+  },
+  {
+    "id": "p32",
+    "name": "Kovalam Lighthouse Beach",
+    "lat": 8.3842,
+    "lng": 76.9785,
+    "category": "Beach",
+    "description": "World-famous crescent beach with historic red-and-white lighthouse.",
+    "bestTime": "Sunset",
+    "isAirport": false
+  },
+  {
+    "id": "p33",
+    "name": "Napier Museum & Art Gallery",
+    "lat": 8.5085,
+    "lng": 76.9555,
+    "category": "Museum",
+    "description": "19th-century Indo-Saracenic museum housing rare historical artifacts.",
+    "bestTime": "Afternoon",
+    "isAirport": false
+  },
+  {
+    "id": "p34",
+    "name": "Hamad International Airport (DOH - Qatar)",
+    "lat": 25.2609,
+    "lng": 51.6138,
+    "category": "Airport",
+    "description": "World-class 5-star transit hub in Doha, Qatar.",
+    "bestTime": "Anytime",
+    "isAirport": true
+  },
+  {
+    "id": "p35",
+    "name": "Souq Waqif & Falcon Souq (Doha)",
+    "lat": 25.2867,
+    "lng": 51.5333,
+    "category": "Shopping",
+    "description": "Historic marketplace brimming with spice vendors, cafes, and falconry.",
+    "bestTime": "Evening",
+    "isAirport": false
+  },
+  {
+    "id": "p36",
+    "name": "Museum of Islamic Art (MIA - Doha)",
+    "lat": 25.2952,
+    "lng": 51.5392,
+    "category": "Museum",
+    "description": "I.M. Pei designed masterpiece on Doha's waterfront corniche.",
+    "bestTime": "Morning",
+    "isAirport": false
+  },
+  {
+    "id": "p37",
+    "name": "Doha Corniche & West Bay Skyline",
+    "lat": 25.3050,
+    "lng": 51.5200,
+    "category": "Viewpoint",
+    "description": "Seven-kilometer promenade overlooking the Arabian Gulf and skyscrapers.",
+    "bestTime": "Sunset",
+    "isAirport": false
   }
 ]

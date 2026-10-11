@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Plane, Compass, Navigation, MapPin, Clock, ShieldCheck, Menu, X, User, Sparkles } from 'lucide-react';
 import { useLayover } from '../context/LayoverContext';

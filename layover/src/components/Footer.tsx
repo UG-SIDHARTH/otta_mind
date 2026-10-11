@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Plane, Mail, Send, Globe, Share2, MessageSquare, ShieldCheck } from 'lucide-react';
+import { useState } from 'react';
+import { Plane, Send, Globe, Share2, MessageSquare, ShieldCheck } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 export default function Footer() {

@@ -1,6 +1,4 @@
-import React from 'react';
 import TravelSearch from './TravelSearch';
-import { ShieldCheck, Zap } from 'lucide-react';
 
 export default function HeroSection() {
   return (

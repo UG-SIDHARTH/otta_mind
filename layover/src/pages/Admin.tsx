@@ -2,11 +2,14 @@ import { useState, useEffect } from 'react'
 import { LayoutDashboard, Map, Settings, Users, Plane, LogOut, Plus, Edit, Trash2 } from 'lucide-react'
 import { Link } from 'react-router-dom'
 
-// Mock initial data
+// Curated initial destinations
 const initialDestinations = [
   { id: 1, name: 'Dubai (DXB)', experiences: 12, active: true },
-  { id: 2, name: 'Singapore (SIN)', experiences: 8, active: true },
-  { id: 3, name: 'London (LHR)', experiences: 15, active: false },
+  { id: 2, name: 'Qatar / Doha (DOH)', experiences: 8, active: true },
+  { id: 3, name: 'Calicut / Kozhikode (CCJ)', experiences: 6, active: true },
+  { id: 4, name: 'Trivandrum / Thiruvananthapuram (TRV)', experiences: 7, active: true },
+  { id: 5, name: 'Singapore (SIN)', experiences: 9, active: true },
+  { id: 6, name: 'London (LHR)', experiences: 15, active: true },
 ]
 
 export default function Admin() {
