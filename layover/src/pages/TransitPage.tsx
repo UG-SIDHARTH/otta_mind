@@ -37,7 +37,7 @@ interface DetailModalState {
 
 export default function TransitPage() {
   const navigate = useNavigate();
-  const { flight, updateFlight, formatCurrency } = useLayover();
+  const { flight, updateFlight, formatCurrency, confirmTransportPlan } = useLayover();
   
   const [selectedOriginId, setSelectedOriginId] = useState('p3'); // DXB Airport default
   const [selectedDestId, setSelectedDestId] = useState('p1'); // Burj Khalifa default
@@ -235,6 +235,38 @@ export default function TransitPage() {
       mode: modeId,
       details: features,
     });
+  };
+
+  const handleConfirmTransport = () => {
+    const modeId = modalState.mode;
+    let modeType: 'metro' | 'taxi' | 'careem' | 'private' = 'metro';
+    let fare = totalMetroFare;
+    let duration = estimatedMetroMins;
+
+    if (modeId === 'taxi') {
+      modeType = 'taxi';
+      fare = totalTaxiFare;
+      duration = estimatedTaxiMins;
+    } else if (modeId === 'ridehail') {
+      modeType = 'careem';
+      fare = totalRideHailFare;
+      duration = estimatedTaxiMins + 2;
+    } else if (modeId === 'private') {
+      modeType = 'private';
+      fare = totalPrivateFare;
+      duration = estimatedTaxiMins;
+    }
+
+    confirmTransportPlan({
+      id: modeId,
+      name: modalState.title,
+      mode: modeType,
+      fareAed: fare,
+      durationMins: duration,
+    });
+
+    setModalState({ ...modalState, isOpen: false });
+    navigate('/itinerary');
   };
 
   const handleSelectDestinationCard = (destId: string) => {
@@ -789,10 +821,7 @@ export default function TransitPage() {
                 Close
               </button>
               <button
-                onClick={() => {
-                  setModalState({ ...modalState, isOpen: false });
-                  navigate('/itinerary');
-                }}
+                onClick={handleConfirmTransport}
                 className="bg-[#FFB21A] hover:bg-amber-400 text-[#080D1B] px-4 py-2 rounded-xl text-xs font-bold font-display transition-colors"
               >
                 Confirm Transport Plan

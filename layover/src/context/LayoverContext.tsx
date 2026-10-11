@@ -1,6 +1,14 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import type { FlightContext, ItineraryStop } from '../types';
 
+export interface SelectedTransport {
+  id: string;
+  name: string;
+  mode: 'metro' | 'taxi' | 'careem' | 'private';
+  fareAed: number;
+  durationMins: number;
+}
+
 interface LayoverContextType {
   flight: FlightContext;
   updateFlight: (partial: Partial<FlightContext>) => void;
@@ -10,6 +18,8 @@ interface LayoverContextType {
   currency: 'AED' | 'USD' | 'EUR';
   setCurrency: (c: 'AED' | 'USD' | 'EUR') => void;
   formatCurrency: (amountAed: number) => string;
+  selectedTransport: SelectedTransport;
+  confirmTransportPlan: (transport: SelectedTransport) => void;
 }
 
 const defaultFlight: FlightContext = {
@@ -26,29 +36,29 @@ const defaultFlight: FlightContext = {
 const defaultStops: ItineraryStop[] = [
   {
     id: 'stop-origin',
-    name: 'DXB Terminal 3 Concourse',
+    name: 'DXB Terminal 3 Arrival Concourse',
     nodeType: 'airport_origin',
     scheduledArrival: '08:00',
     scheduledDeparture: '08:30',
-    legToNext: { mode: 'metro', durationMins: 24, costAed: 7.50 },
+    legToNext: { mode: 'taxi', durationMins: 25, costAed: 48.75 },
   },
   {
     id: 'stop-1',
-    attractionId: 'p3',
+    attractionId: 'p1',
     name: 'Burj Khalifa & At The Top',
     nodeType: 'attraction',
     scheduledArrival: '09:00',
     scheduledDeparture: '11:00',
-    legToNext: { mode: 'walk', durationMins: 10, costAed: 0 },
+    legToNext: { mode: 'metro', durationMins: 15, costAed: 5.00 },
   },
   {
     id: 'stop-2',
-    attractionId: 'p1',
+    attractionId: 'p2',
     name: 'Dubai Mall & Fountain Boardwalk',
     nodeType: 'attraction',
-    scheduledArrival: '11:10',
+    scheduledArrival: '11:15',
     scheduledDeparture: '13:00',
-    legToNext: { mode: 'taxi', durationMins: 20, costAed: 35 },
+    legToNext: { mode: 'taxi', durationMins: 25, costAed: 48.75 },
   },
   {
     id: 'stop-dest',
@@ -58,6 +68,14 @@ const defaultStops: ItineraryStop[] = [
     scheduledDeparture: '16:00',
   },
 ];
+
+const defaultTransport: SelectedTransport = {
+  id: 'taxi',
+  name: 'Official Airport Taxi (DTC)',
+  mode: 'taxi',
+  fareAed: 48.75,
+  durationMins: 25,
+};
 
 const LayoverContext = createContext<LayoverContextType | undefined>(undefined);
 
@@ -74,6 +92,11 @@ export const LayoverProvider: React.FC<{ children: React.ReactNode }> = ({ child
 
   const [currency, setCurrency] = useState<'AED' | 'USD' | 'EUR'>('AED');
 
+  const [selectedTransport, setSelectedTransport] = useState<SelectedTransport>(() => {
+    const saved = localStorage.getItem('layover_transport_ctx');
+    return saved ? JSON.parse(saved) : defaultTransport;
+  });
+
   useEffect(() => {
     localStorage.setItem('layover_flight_ctx', JSON.stringify(flight));
   }, [flight]);
@@ -81,6 +104,10 @@ export const LayoverProvider: React.FC<{ children: React.ReactNode }> = ({ child
   useEffect(() => {
     localStorage.setItem('layover_stops_ctx', JSON.stringify(stops));
   }, [stops]);
+
+  useEffect(() => {
+    localStorage.setItem('layover_transport_ctx', JSON.stringify(selectedTransport));
+  }, [selectedTransport]);
 
   const updateFlight = (partial: Partial<FlightContext>) => {
     setFlight((prev) => {
@@ -114,6 +141,25 @@ export const LayoverProvider: React.FC<{ children: React.ReactNode }> = ({ child
     }));
   };
 
+  const confirmTransportPlan = (transport: SelectedTransport) => {
+    setSelectedTransport(transport);
+    setStops((prevStops) => {
+      return prevStops.map((stop, index) => {
+        if (index === 0) {
+          return {
+            ...stop,
+            legToNext: {
+              mode: transport.mode,
+              durationMins: transport.durationMins,
+              costAed: transport.fareAed,
+            },
+          };
+        }
+        return stop;
+      });
+    });
+  };
+
   const formatCurrency = (amountAed: number): string => {
     if (currency === 'USD') return `$${(amountAed * 0.27).toFixed(2)}`;
     if (currency === 'EUR') return `€${(amountAed * 0.25).toFixed(2)}`;
@@ -131,6 +177,8 @@ export const LayoverProvider: React.FC<{ children: React.ReactNode }> = ({ child
         currency,
         setCurrency,
         formatCurrency,
+        selectedTransport,
+        confirmTransportPlan,
       }}
     >
       {children}

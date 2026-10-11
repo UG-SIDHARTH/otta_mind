@@ -29,6 +29,7 @@ import {
   Train, 
   Car, 
   Footprints,
+  Navigation,
   CheckCircle2,
   Users,
   Calendar,
@@ -106,14 +107,18 @@ function SortableStop({
       {/* Transit Leg Segment Connector */}
       {stop.legToNext && (
         <div className="ml-10 py-2 border-l-2 border-dashed border-[#293950] pl-6 flex items-center gap-3 font-mono text-xs text-[#9EACC3]">
-          <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#080E1D] border border-[#293950] text-white">
+          <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#080E1D] border border-[#293950] text-white">
             {stop.legToNext.mode === 'metro' && <Train className="w-3.5 h-3.5 text-[#26D6A0]" />}
             {stop.legToNext.mode === 'taxi' && <Car className="w-3.5 h-3.5 text-[#FFAD18]" />}
+            {stop.legToNext.mode === 'careem' && <Navigation className="w-3.5 h-3.5 text-[#28C8E8]" />}
+            {stop.legToNext.mode === 'private' && <ShieldCheck className="w-3.5 h-3.5 text-purple-400" />}
             {stop.legToNext.mode === 'walk' && <Footprints className="w-3.5 h-3.5 text-[#28C8E8]" />}
-            <span className="capitalize">{stop.legToNext.mode}</span>
+            <span className="capitalize font-bold">
+              {stop.legToNext.mode === 'taxi' ? 'Official Airport Taxi (DTC)' : stop.legToNext.mode}
+            </span>
             <span>({stop.legToNext.durationMins}m)</span>
           </div>
-          <span className="text-[#FFAD18] font-bold">{stop.legToNext.costAed} AED</span>
+          <span className="text-[#FFAD18] font-bold">{stop.legToNext.costAed.toFixed(2)} AED</span>
         </div>
       )}
     </div>
@@ -121,7 +126,7 @@ function SortableStop({
 }
 
 export default function ItineraryPage() {
-  const { flight, stops, setStops, currency, setCurrency, formatCurrency } = useLayover();
+  const { flight, stops, setStops, currency, setCurrency, formatCurrency, selectedTransport } = useLayover();
   const [selectedPlaceId, setSelectedPlaceId] = useState('p1');
   const [passModalOpen, setPassModalOpen] = useState(false);
   const [travelersCount, setTravelersCount] = useState(1);
@@ -214,6 +219,15 @@ export default function ItineraryPage() {
           </p>
         </div>
 
+        {/* Selected Transport Active Confirmation Pill */}
+        <div className="bg-[#142035] border border-[#FFAD18]/40 p-3.5 rounded-2xl mb-6 flex items-center justify-between gap-3 font-mono text-xs shadow-lg">
+          <div className="flex items-center gap-2 text-[#FFAD18] font-bold">
+            <Car className="w-4 h-4" />
+            <span>Active Confirmed Transport: <span className="text-white">{selectedTransport.name}</span></span>
+          </div>
+          <span className="text-[#26D6A0] font-bold font-mono text-xs">{selectedTransport.fareAed.toFixed(2)} AED ({selectedTransport.durationMins}m)</span>
+        </div>
+
         {/* Travel Search and Trip Information Bar */}
         <div className="bg-[#142035] p-4 rounded-2xl border border-[#293950] mb-8 shadow-xl flex flex-wrap items-center justify-between gap-4 font-mono text-xs">
           <div className="flex flex-wrap items-center gap-6">
@@ -262,7 +276,7 @@ export default function ItineraryPage() {
           </div>
 
           <Link
-            to="/"
+            to="/transit"
             className="text-xs font-mono text-[#FFAD18] hover:underline flex items-center gap-1 font-bold"
           >
             <Edit3 className="w-3.5 h-3.5" />
@@ -320,7 +334,7 @@ export default function ItineraryPage() {
         {/* Main Two-Column Layout */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
           
-          {/* Left Column (65% width approx - 8 cols) */}
+          {/* Left Column (65% width approx - 7 cols) */}
           <div className="lg:col-span-7 space-y-8">
             
             {/* Add Stop Controls */}
@@ -398,7 +412,7 @@ export default function ItineraryPage() {
               {/* Expense Breakdown */}
               <div className="space-y-3 font-mono text-xs text-[#9EACC3] mb-6">
                 <div className="flex justify-between">
-                  <span>Transit Fares:</span>
+                  <span>Transit Fares ({selectedTransport.name}):</span>
                   <span className="text-white font-bold">{formatCurrency(baseTransitAed)}</span>
                 </div>
                 <div className="flex justify-between">
@@ -430,7 +444,7 @@ export default function ItineraryPage() {
                 </button>
 
                 <button
-                  onClick={() => alert(`Sending itinerary summary for ${travelersCount} traveler(s) to WhatsApp...`)}
+                  onClick={() => alert(`Sending itinerary summary for ${travelersCount} traveler(s) using ${selectedTransport.name} to WhatsApp...`)}
                   className="w-full bg-[#1A2940] hover:bg-[#1E293B] text-white py-3.5 rounded-xl font-medium flex items-center justify-center gap-2 border border-[#293950] text-xs transition-colors"
                 >
                   <Share2 className="w-4 h-4 text-[#26D6A0]" />
