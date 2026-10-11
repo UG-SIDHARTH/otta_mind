@@ -1,58 +1,45 @@
-# Layover: Transit Guide & Itinerary Builder ✈️🌍
+# ✈️ LAYOVER — Dubai Airport Transit Guide & Fare Calculator
 
-Layover is a premium, modern web application designed for travelers looking to maximize their layover time. Instead of waiting at the terminal, users can build curated micro-experiences, find premium lounges, and generate express city tours tailored exactly to their transit duration. 
+[![React](https://img.shields.io/badge/React-19.0-61DAFB?logo=react&logoColor=black)](https://react.dev/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.7-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![Vite](https://img.shields.io/badge/Vite-6.0-646CFF?logo=vite&logoColor=white)](https://vitejs.dev/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-v4.0-06B6D4?logo=tailwindcss&logoColor=white)](https://tailwindcss.com/)
 
-## ✨ Key Features
+**LAYOVER** is a tactical airport stopover travel platform designed specifically for international transit passengers at **Dubai International Airport (DXB)**.
 
-- **Dynamic Itinerary Builder**: A drag-and-drop (`@dnd-kit`) interface allowing users to add, reorder, and remove stops during their layover.
-- **Real-Time Fare & Transit Guide**: Calculates Haversine distances to estimate fares across Standard Taxi, Ride-Hail (Uber/Careem), and Metro transit systems.
-- **Smart Metro Suggestions**: Analyzes proximity to nearest Metro stations; if points are close enough to a station, it highlights Metro transit as a viable, money-saving alternative.
-- **Interactive Maps**: Uses `react-leaflet` to display origin, destination, and transit stations on a geographical map.
-- **Persistent State**: Itineraries are saved seamlessly in `localStorage`.
-- **Admin Dashboard**: An integrated management interface to handle available destinations.
-- **Stunning UI**: Built using React, Vite, and Tailwind CSS v4, featuring glassmorphism, responsive designs, gradients, and micro-animations with `lucide-react` icons.
+---
 
-## 🚀 Tech Stack
+## 🌟 Key Application Features
 
-- **Frontend Framework**: React 19 + TypeScript
-- **Build Tool**: Vite
-- **Styling**: Tailwind CSS (v4)
-- **Routing**: React Router DOM (`react-router-dom`)
-- **Drag & Drop**: `@dnd-kit/core`, `@dnd-kit/sortable`
-- **Mapping**: `leaflet`, `react-leaflet`
-- **Icons**: `lucide-react`
-- **Testing**: `vitest`
-- **Deployment & Infra**: Docker & Docker Compose
+- **DXB Live Transit Guide & Fare Telemetry (`/transit`)**: Real-time fare and duration telemetry comparing Dubai Metro Red Line, Official Airport Taxis (DTC), Careem/Uber Saloon, and Private Chauffeurs.
+- **Discover Dubai & Transit Protocols (`/explore`)**: 24+ turnaround sightseeing cards, category filters, bookmarking, and essential airport protocols (Left Luggage Storage, Smart Gates Fast-Track, Nol Silver Cards).
+- **Smart Itinerary Builder & Time Ledger (`/itinerary`)**: Drag-and-drop timeline builder (`@dnd-kit`) with automated 150-minute DXB gate buffer checks and real-time currency switching (AED, USD, EUR).
+- **Interactive Leaflet Route Maps**: Visual route display connecting DXB T1/T2/T3 concourses to city landmarks.
+- **Offline Boarding Pass & QR Generator**: Digital stopover pass with safe return window verification.
+- **Admin Dashboard (`/admin`)**: Management dashboard to update fare tariffs and places data.
 
-## 🛠️ How to Run Locally
+---
 
-### Using Docker (Recommended for Debian/Linux)
-This project is containerized to ensure cross-platform compatibility without local node environment issues.
+## 🚀 How to Run Locally
 
 ```bash
-# Build and start the container in the background
-docker-compose up --build -d
-
-# To stop the container
-docker-compose down
-```
-The app will be accessible at `http://localhost:5173` (or your mapped port/domain).
-
-### Using NPM (Standard Development)
-```bash
+# Install dependencies
 npm install
+
+# Start Vite dev server
 npm run dev
 ```
 
-## 🧪 Running Tests
-The core routing algorithms (Haversine distance) and fare calculation logic are tested using `vitest`.
-```bash
-npm install vitest -D
-npx vitest run
-```
+Open **[http://localhost:5174](http://localhost:5174)** in your web browser.
 
-## 📁 Project Structure
-- `src/components/` - Reusable UI components (`TransitGuide.tsx`, `ItineraryBuilder.tsx`, `MapComponent.tsx`, etc.)
-- `src/pages/` - Main route views (`Home.tsx`, `Admin.tsx`)
-- `src/lib/` - Core logic (`fare.ts`, `routing.ts`) and tests.
-- `src/data/` - Seeded JSON data (Places, Stations, Tariffs) generated via `seed.cjs`.
+---
+
+## 🐳 Docker Containerization
+
+```bash
+# Start Docker container
+docker-compose up --build -d
+
+# Stop Docker container
+docker-compose down
+```
