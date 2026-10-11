@@ -6,20 +6,18 @@ import {
   AlertTriangle,
   CheckCircle2,
   Clock,
-  Users,
   MapPin,
   Sparkles,
   ShieldCheck,
   ArrowRight,
   ChevronRight,
-  Info,
-  Layers,
   HelpCircle,
   ArrowUpDown,
   Luggage,
-  ExternalLink,
+  Layers,
   DollarSign
 } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import MapComponent from '../components/MapComponent';
 import placesData from '../data/places.json';
 import stationsData from '../data/stations.json';
@@ -38,10 +36,11 @@ interface DetailModalState {
 }
 
 export default function TransitPage() {
-  const { formatCurrency } = useLayover();
-  const [selectedOriginId, setSelectedOriginId] = useState('p3'); // DXB Airport T3 default
+  const navigate = useNavigate();
+  const { flight, updateFlight, formatCurrency } = useLayover();
+  
+  const [selectedOriginId, setSelectedOriginId] = useState('p3'); // DXB Airport default
   const [selectedDestId, setSelectedDestId] = useState('p1'); // Burj Khalifa default
-  const [selectedTerminal, setSelectedTerminal] = useState<'T1' | 'T2' | 'T3'>('T3');
   const [travelersCount, setTravelersCount] = useState(1);
   const [sortOption, setSortOption] = useState<'price' | 'duration'>('price');
   const [activeTab, setActiveTab] = useState<'all' | 'metro' | 'taxi' | 'ridehail'>('all');
@@ -59,33 +58,32 @@ export default function TransitPage() {
   const originPoint: Point = { lat: originPlace.lat, lng: originPlace.lng, isAirport: originPlace.isAirport };
   const destPoint: Point = { lat: destPlace.lat, lng: destPlace.lng, isAirport: destPlace.isAirport };
 
-  const distanceKm = Math.round(calculateDistance(originPoint, destPoint) * 10) / 10;
+  const distanceKm = Math.max(2.5, Math.round(calculateDistance(originPoint, destPoint) * 10) / 10);
   
-  // Fares per person
-  const singleTaxiFare = calculateTaxiFare(originPoint, destPoint, tariffsData);
-  const singleRideHailFare = calculateRideHailFare(originPoint, destPoint, tariffsData);
+  // Single fares
+  const singleTaxiFare = Math.round(calculateTaxiFare(originPoint, destPoint, tariffsData) * 100) / 100;
+  const singleRideHailFare = Math.round(calculateRideHailFare(originPoint, destPoint, tariffsData) * 100) / 100;
   const singleMetroFare = calculateMetroFare(tariffsData);
   const singlePrivateFare = 120.00;
 
-  // Group totals (Taxis & Ride-hails are per vehicle up to 4/6 pax, Metro is per person)
+  // Group totals
   const taxiVehicles = Math.ceil(travelersCount / 4);
   const totalTaxiFare = singleTaxiFare * taxiVehicles;
   const totalRideHailFare = singleRideHailFare * taxiVehicles;
   const totalMetroFare = singleMetroFare * travelersCount;
   const totalPrivateFare = travelersCount <= 6 ? 120.00 : 240.00;
 
-  // Estimated durations
+  // Estimated transit times based on calculated distance
   const estimatedMetroMins = Math.round(distanceKm * 1.6 + 8);
   const estimatedTaxiMins = Math.round(distanceKm * 1.2 + 5);
 
-  const nearestOriginStation = findNearestStation(originPoint, stationsData);
   const nearestDestStation = findNearestStation(destPoint, stationsData);
 
   const transportModes = [
     {
       id: 'metro',
       title: 'Dubai Metro Red Line',
-      subtitle: 'Air-conditioned link directly from DXB T1 & T3 concourses',
+      subtitle: `Air-conditioned link directly from DXB ${flight.terminal} concourse`,
       badge: 'RECOMMENDED • LOWEST COST',
       badgeBg: 'bg-[#28D99B]',
       badgeText: 'text-[#081020]',
@@ -102,7 +100,7 @@ export default function TransitPage() {
       features: [
         '0% Traffic Risk (100% Reliable)',
         'Nol Silver Pass Accepted (Zone 2 Fare)',
-        'Trains depart every 4–7 mins from T1 & T3'
+        `Trains depart every 4–7 mins from DXB ${flight.terminal}`
       ],
       actionLabel: 'View Metro Route',
     },
@@ -189,7 +187,7 @@ export default function TransitPage() {
 
   const curatedDestinations = [
     {
-      id: 'burj-khalifa',
+      id: 'p1',
       name: 'Burj Khalifa & Dubai Mall',
       image: 'https://images.unsplash.com/photo-1512453979798-5ea266f8880c?auto=format&fit=crop&w=800&q=80',
       metroTime: '24 mins direct',
@@ -199,7 +197,7 @@ export default function TransitPage() {
       description: 'Experience the world\'s tallest skyscraper, dancing fountains, and flagship retail boulevard.',
     },
     {
-      id: 'dubai-marina',
+      id: 'p5',
       name: 'Dubai Marina & JBR Beach',
       image: 'https://images.unsplash.com/photo-1580674684081-7617fbf3d745?auto=format&fit=crop&w=800&q=80',
       metroTime: '45 mins Metro / 30 mins Taxi',
@@ -209,7 +207,7 @@ export default function TransitPage() {
       description: 'Stunning luxury yachts, high-rise cityscape, and vibrant beachfront dining promenades.',
     },
     {
-      id: 'museum-future',
+      id: 'p13',
       name: 'Museum of the Future',
       image: 'https://images.unsplash.com/photo-1629814421183-9b6d85918731?auto=format&fit=crop&w=800&q=80',
       metroTime: '18 mins direct',
@@ -219,7 +217,7 @@ export default function TransitPage() {
       description: 'Architectural marvel featuring immersive exhibits on space exploration, climate, and wellness.',
     },
     {
-      id: 'gold-souk',
+      id: 'p10',
       name: 'Dubai Creek & Gold Souk',
       image: 'https://images.unsplash.com/photo-1546412414-8035e1786b22?auto=format&fit=crop&w=800&q=80',
       metroTime: '15 mins Green Line',
@@ -237,6 +235,11 @@ export default function TransitPage() {
       mode: modeId,
       details: features,
     });
+  };
+
+  const handleSelectDestinationCard = (destId: string) => {
+    setSelectedDestId(destId);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   return (
@@ -289,9 +292,9 @@ export default function TransitPage() {
                   {(['T1', 'T2', 'T3'] as const).map((t) => (
                     <button
                       key={t}
-                      onClick={() => setSelectedTerminal(t)}
-                      className={`px-2.5 py-1 rounded-lg text-xs font-mono font-bold transition-all ${
-                        selectedTerminal === t
+                      onClick={() => updateFlight({ terminal: t })}
+                      className={`px-3 py-1 rounded-lg text-xs font-mono font-bold transition-all ${
+                        flight.terminal === t
                           ? 'bg-[#FFB21A] text-[#081020]'
                           : 'text-[#A4B2C8] hover:text-white'
                       }`}
@@ -365,7 +368,7 @@ export default function TransitPage() {
                     NEAREST METRO LINK
                   </label>
                   <div className="bg-[#081020] border border-[#2A3A51] rounded-xl px-4 py-2.5 text-xs font-mono text-white flex items-center justify-between">
-                    <span className="text-[#28D99B] font-semibold">{nearestDestStation ? nearestDestStation.name : 'Financial Center'}</span>
+                    <span className="text-[#28D99B] font-semibold">{nearestDestStation ? nearestDestStation.name : 'Burj Khalifa/Dubai Mall Station'}</span>
                     <span className="text-[10px] text-[#A4B2C8] bg-[#142238] px-2 py-0.5 rounded">Red Line</span>
                   </div>
                 </div>
@@ -431,7 +434,7 @@ export default function TransitPage() {
               Transport Options & Fare Telemetry Cards
             </h2>
             <p className="text-xs font-mono text-[#A4B2C8] mt-1">
-              Showing total fares for <span className="text-[#FFB21A] font-bold">{travelersCount} traveler(s)</span> from DXB {selectedTerminal} to {destPlace.name}.
+              Showing total fares for <span className="text-[#FFB21A] font-bold">{travelersCount} traveler(s)</span> from DXB {flight.terminal} to {destPlace.name}.
             </p>
           </div>
 
@@ -532,7 +535,7 @@ export default function TransitPage() {
                 <span>Fare Comparison Matrix</span>
               </h3>
               <p className="text-xs font-mono text-[#A4B2C8] mt-1">
-                Comparative breakdown for traveling from DXB {selectedTerminal} to {destPlace.name} ({distanceKm} km).
+                Comparative breakdown for traveling from DXB {flight.terminal} to {destPlace.name} ({distanceKm} km).
               </p>
             </div>
           </div>
@@ -696,13 +699,7 @@ export default function TransitPage() {
 
                 <div className="p-5 pt-0">
                   <button
-                    onClick={() => {
-                      const found = placesData.find(p => p.name.toLowerCase().includes(dest.name.toLowerCase().split(' ')[0]));
-                      if (found) {
-                        setSelectedDestId(found.id);
-                        window.scrollTo({ top: 0, behavior: 'smooth' });
-                      }
-                    }}
+                    onClick={() => handleSelectDestinationCard(dest.id)}
                     className="w-full bg-[#081020] hover:bg-[#FFB21A] text-white hover:text-[#081020] border border-[#2A3A51] hover:border-[#FFB21A] py-2.5 px-4 rounded-xl text-xs font-bold font-display transition-all flex items-center justify-center gap-1.5"
                   >
                     <span>Explore Destination</span>
@@ -792,8 +789,11 @@ export default function TransitPage() {
                 Close
               </button>
               <button
-                onClick={() => setModalState({ ...modalState, isOpen: false })}
-                className="bg-[#FFB21A] hover:bg-amber-400 text-[#081020] px-4 py-2 rounded-xl text-xs font-bold font-display transition-colors"
+                onClick={() => {
+                  setModalState({ ...modalState, isOpen: false });
+                  navigate('/itinerary');
+                }}
+                className="bg-[#FFB21A] hover:bg-amber-400 text-[#080D1B] px-4 py-2 rounded-xl text-xs font-bold font-display transition-colors"
               >
                 Confirm Transport Plan
               </button>

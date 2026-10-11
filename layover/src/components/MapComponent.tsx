@@ -26,26 +26,29 @@ interface MapComponentProps {
 }
 
 export default function MapComponent({ origin, destination, stations }: MapComponentProps) {
+  const centerLat = (origin.lat + destination.lat) / 2;
+  const centerLng = (origin.lng + destination.lng) / 2;
+
   return (
-    <div className="h-[400px] w-full rounded-2xl overflow-hidden border border-slate-700 shadow-xl relative z-0">
+    <div className="h-full w-full overflow-hidden relative z-0">
       <MapContainer center={[origin.lat, origin.lng]} zoom={12} scrollWheelZoom={false} className="h-full w-full">
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
-        <ChangeView center={[(origin.lat + destination.lat) / 2, (origin.lng + destination.lng) / 2]} zoom={11} />
+        <ChangeView center={[centerLat, centerLng]} zoom={11} />
         
         <Marker position={[origin.lat, origin.lng]}>
-          <Popup>Origin</Popup>
+          <Popup>DXB Origin Concourse</Popup>
         </Marker>
         
         <Marker position={[destination.lat, destination.lng]}>
-          <Popup>Destination</Popup>
+          <Popup>Destination Point</Popup>
         </Marker>
 
         {stations.map((st, i) => (
           <Marker key={i} position={[st.lat, st.lng]} opacity={0.5}>
-            <Popup>Station</Popup>
+            <Popup>Metro Station</Popup>
           </Marker>
         ))}
       </MapContainer>
